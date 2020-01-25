@@ -3,8 +3,12 @@
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "tsc && node index.js"
+  },
   "dependencies": {
-    "fuse-native": "^2.1.0"
+    "fuse-native": "^2.1.0",
+    "jest-runtime": "^25.1.0"
   },
   "devDependencies": {
     "jest": "^25.1.0",
