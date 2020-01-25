@@ -1,0 +1,13 @@
+{
+  "name": "juse",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "fuse-native": "^2.1.0"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "typescript": "^3.7.5"
+  }
+}
