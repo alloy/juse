@@ -11,6 +11,7 @@
     "jest-runtime": "^25.1.0"
   },
   "devDependencies": {
+    "@types/node": "^13.5.0",
     "jest": "^25.1.0",
     "typescript": "^3.7.5"
   }
