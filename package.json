@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node index.js"
+    "start": "node -r ts-node/register --inspect index.ts"
   },
   "dependencies": {
     "fuse-native": "^2.1.0",
@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/node": "^13.5.0",
     "jest": "^25.1.0",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   }
 }
