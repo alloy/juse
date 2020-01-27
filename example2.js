@@ -21,30 +21,24 @@ const fuse = new Fuse(mnt, {
   readdir: function (readPath, cb) {
     readPath = path.join(root, readPath)
     console.log(readPath)
-    fs.readdir(readPath, cb)
+    fs.readdir(readPath, (err, files) => cb((err && err.errno) || 0, files))
   },
   getattr: function (readPath, cb) {
     readPath = path.join(root, readPath)
-    fs.stat(readPath, (err, stats) => {
-      if (err) {
-        // console.error(err)
-        cb(err.errno)
-      } else {
-        cb(null, stats)
-      }
-    })
+    fs.stat(readPath, (err, stat) => cb((err && err.errno) || 0, stat))
   },
   open: function (readPath, flags, cb) {
     readPath = path.join(root, readPath)
-    fs.open(readPath, flags, cb)
+    fs.open(readPath, flags, (err, fd) => cb((err && err.errno) || 0, fd))
   },
   release: function (_readPath, fd, cb) {
     fs.close(fd, () => cb(0))
   },
   read: function (_readPath, fd, buf, len, pos, cb) {
-    fs.read(fd, buf, pos, len, pos, cb)
+    fs.read(fd, buf, pos, len, pos, (_err, bytesRead) => cb(bytesRead))
   }
 }, { debug: true })
+
 fuse.mount(function (err) {
   console.error(err)
 })
