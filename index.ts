@@ -61,17 +61,16 @@ async function init() {
               readPath = path.join(root, readPath)
               fs.stat(readPath, (err, stat) => {
                 if (err) {
-                  cb(err.errno!)
-                } else {
+                  return cb(err.errno!)
+                } else if (!stat.isDirectory()) {
                   // TODO: This should really run in parallel with fs.stat, but the default cache of
                   //       ScriptTransformer uses readSync to read the file.
                   const code = runtime.transformFile(readPath)
                   if (code) {
-                    cb(0, { ...stat, size: code.length })
-                  } else {
-                    cb(0, stat)
+                    return cb(0, { ...stat, size: code.length })
                   }
                 }
+                return cb(0, stat)
               })
             },
             open(readPath, flags, cb) {
