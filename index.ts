@@ -18,7 +18,8 @@ class Runtime {
     }
 
     transformFile(filename: string) {
-        if (!this._extensions.includes(path.extname(filename))) {
+        // TODO: Jest's resolver wouldn’t load this, as its list of extensions includes e.g. .ios.js and thus all extensions can be matched
+        if (filename.endsWith(".d.ts") || !this._extensions.includes(path.extname(filename))) {
             return null
         }
 
