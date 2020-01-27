@@ -84,23 +84,24 @@ async function init() {
               }
             },
             release(_readPath, fd, cb) {
-              if (fd !== 0) {
+              if (fd === 0) {
+                cb(0)
+              } else {
                 fs.close(fd, () => cb(0))
               }
             },
             read(readPath, fd, buf, len, pos, cb) {
-              // console.log({ readPath, pos, len })
               if (pos === len) {
                 cb(0)
                 return
               }
-              if (fd !== 0) {
-                fs.read(fd, buf, 0, len, pos, (_err, bytesRead) => cb(bytesRead))
-              } else {
+              if (fd === 0) {
                 readPath = path.join(root, readPath)
                 const data = runtime.transformFile(readPath)!.slice(pos, pos + len)
                 buf.write(data)
                 cb(data.length)
+              } else {
+                fs.read(fd, buf, 0, len, pos, (_err, bytesRead) => cb(bytesRead))
               }
             }
           }, { debug: true })
