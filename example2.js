@@ -35,7 +35,7 @@ const fuse = new Fuse(mnt, {
     fs.close(fd, () => cb(0))
   },
   read: function (_readPath, fd, buf, len, pos, cb) {
-    fs.read(fd, buf, pos, len, pos, (_err, bytesRead) => cb(bytesRead))
+    fs.read(fd, buf, 0, len, pos, (_err, bytesRead) => cb(bytesRead))
   }
 }, { debug: true })
 

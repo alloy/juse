@@ -89,12 +89,16 @@ async function init() {
               }
             },
             read(readPath, fd, buf, len, pos, cb) {
+              // console.log({ readPath, pos, len })
+              if (pos === len) {
+                cb(0)
+                return
+              }
               if (fd !== 0) {
-                fs.read(fd, buf, pos, len, pos, (_err, bytesRead) => cb(bytesRead))
+                fs.read(fd, buf, 0, len, pos, (_err, bytesRead) => cb(bytesRead))
               } else {
                 readPath = path.join(root, readPath)
                 const data = runtime.transformFile(readPath)!.slice(pos, pos + len)
-                console.log({ readPath, pos, len })
                 buf.write(data)
                 cb(data.length)
               }
