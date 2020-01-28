@@ -1,3 +1,5 @@
+Juse: A Jest script transformer backed FUSE implementation, which allows you to access the FS with files transformed in place by Jest’s script transformer.
+
 ## Install
 
 Install dependencies:
