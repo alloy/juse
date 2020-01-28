@@ -1,20 +1,11 @@
-/**
- * TODO:
- * - Read source files non-block, unlike what the ScriptTransformer does. Unsure what Jest offers.
- * - Fill build cache ahead of time. Unsure what Jest offers.
- * - Use Jest’s platform aware resolver to check if files should be transformed.
- * - Rename file extnames to .js
- */
-
-import { Config } from '@jest/types'
+import { Config } from "@jest/types"
 import { readConfig } from "jest-config"
-import { ScriptTransformer } from '@jest/transform'
+import { ScriptTransformer } from "@jest/transform"
 import realpathNative from "realpath-native"
-// import stripBom from "strip-bom"
 import yargs from "yargs"
+import Fuse from "fuse-native"
 import fs from "fs"
 import path from "path"
-import Fuse from "fuse-native"
 
 class Runtime {
     private _scriptTransformer: ScriptTransformer
@@ -99,9 +90,19 @@ async function init() {
                 fs.read(fd, buf, 0, len, pos, (_err, bytesRead) => cb(bytesRead))
               }
             }
-          }, { debug: true })
-          fuse.mount(function (err) {
-            console.error(err)
+          }, { debug: true, displayFolder: path.basename(root) })
+          fuse.mount(err => {
+            if (err) throw err
+            console.log(`filesystem mounted on ${fuse.mnt}`)
+          })
+          process.once("SIGINT", function () {
+            fuse.unmount(err => {
+              if (err) {
+                console.log(`filesystem at ${fuse.mnt} not unmounted`, err)
+              } else {
+                console.log(`filesystem at ${fuse.mnt} unmounted`)
+              }
+            })
           })
     }
     catch(e) {

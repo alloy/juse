@@ -24,9 +24,11 @@ declare module "fuse-native" {
 
     class Fuse {
         // static isConfigured(): boolean
+        mnt: string
 
         constructor(mnt: string, handlers: FuseHandlers, opts?: FuseOptions)
-        mount(cb: (error: Error) => void): void
+        mount(cb: (error: Error | null) => void): void
+        unmount(cb: (error: Error | null) => void): void
     }
 
     export default Fuse
