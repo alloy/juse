@@ -7,12 +7,15 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@jest/transform": "^25.1.0",
+    "jest-config": "^25.1.0",
     "fuse-native": "^2.1.0",
-    "jest-runtime": "^25.1.0"
+    "realpath-native": "^2.0.0",
+    "yargs": "^15.1.0"
   },
   "devDependencies": {
     "@types/node": "^13.5.0",
-    "jest": "^25.1.0",
+    "@jest/types": "^25.1.0",
     "typescript": "^3.7.5"
   }
 }
